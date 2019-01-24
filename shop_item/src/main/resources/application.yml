@@ -7,3 +7,5 @@ spring:
     password: admin
     port: 5672
     virtual-host: /admin
+  thymeleaf:
+    cache: false

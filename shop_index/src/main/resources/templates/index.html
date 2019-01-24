@@ -12,6 +12,22 @@
     <script type="text/javascript" src="js/topNav.js" ></script>
     <script type="text/javascript" src="js/focus.js" ></script>
     <script type="text/javascript" src="js/shop_home_tab.js" ></script>
+
+    <script type="text/javascript" src="http://localhost:8086/js/login.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            //获取后台的购物车列表
+            $.ajax({
+                url:"http://localhost:8088/cart/showlist",
+                success:function (data) {
+                    alert(JSON.stringify(data));
+                },
+                dataType:"jsonp",
+                jsonpCallback:"cartlist"
+            });
+        });
+    </script>
 </head>
 <body>
 <!-- Header  -wll-2013/03/24 -->
@@ -21,7 +37,9 @@
         <div class="shop_hd_topNav_all">
             <!-- Header TopNav Left -->
             <div class="shop_hd_topNav_all_left">
-                <p>您好，欢迎来到<b><a href="/">ShopCZ商城</a></b>[<a href="">登录</a>][<a href="">注册</a>]</p>
+                <p id="pid">
+
+                </p>
             </div>
             <!-- Header TopNav Left End -->
 
@@ -105,10 +123,11 @@
             </ul>
             <div class="clear"></div>
             <div class="search_form">
-                <form method="post" action="http://localhost:8083/search/query">
+                <form method="get" action="http://localhost:8083/search/queryPage">
                     <div class="search_formstyle">
+                        <input type="hidden" name="currentPage" value="1">
                         <input type="text" class="search_form_text" name="keyword" placeholder="请输入关键字" />
-                        <input type="submit" class="search_form_sub" name="secrch_submit" value="" title="搜索" />
+                        <input type="submit" class="search_form_sub" value="" title="搜索" />
                     </div>
                 </form>
             </div>

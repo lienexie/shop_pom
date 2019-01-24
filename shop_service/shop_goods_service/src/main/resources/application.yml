@@ -12,6 +12,8 @@ spring:
     password: admin
     port: 5672
     virtual-host: /admin
+  redis:
+    host: 192.168.217.128
 dubbo:
   application:
     name: goods_service
@@ -19,3 +21,5 @@ dubbo:
     address: zookeeper://192.168.217.128:2181
   protocol:
     port: -1
+  provider:
+    timeout: 10000

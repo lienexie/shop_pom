@@ -12,6 +12,7 @@
     <script type="text/javascript" src="js/jquery.js" ></script>
     <script type="text/javascript" src="js/topNav.js" ></script>
     <script type="text/javascript" src="js/shop_list.js" ></script>
+    <script type="text/javascript" src="http://localhost:8086/js/login.js"></script>
 </head>
 <body>
 <!-- Header  -wll-2013/03/24 -->
@@ -21,7 +22,7 @@
         <div class="shop_hd_topNav_all">
             <!-- Header TopNav Left -->
             <div class="shop_hd_topNav_all_left">
-                <p>您好，欢迎来到<b><a href="/">ShoopNC商城</a></b>[<a href="">登录</a>][<a href="">注册</a>]</p>
+                <p id="pid"></p>
             </div>
             <!-- Header TopNav Left End -->
 
@@ -374,7 +375,7 @@
         <!-- 商品列表 -->
         <div class="shop_bd_list_content clearfix">
             <ul>
-                <li th:each="goods : ${goodsList}">
+                <li th:each="goods : ${page.list}">
                     <dl>
                         <dt><a th:href="${'http://localhost:8085/page/' + goods.id + '.html'}"><img th:src="${'http://192.168.217.128/'+goods.gimage}" style="width: 170px;height: 170px" src="images/21151da3bdefc6d9a7120c991fe59800.jpg_small.jpg" /></a></dt>
                         <dd class="title"><a href="" th:text="${goods.title}">OCIAIZO春装水洗做旧短外套复古磨白短款牛仔外套春01C1417</a></dd>
@@ -388,12 +389,22 @@
         </div>
         <div class="clear"></div>
         <div class="pagination">
-            <ul><li><span>首页</span></li>
-                <li><span>上一页</span></li>
-                <li><span class="currentpage">1</span></li>
-                <li><span>下一页</span></li>
-                <li><span>末页</span></li>
+            <ul th:if="${page.list.size()!=0}">
+                <li>
+                    <a th:href="${'http://localhost:8083/search/queryPage?currentPage=1&keyword='+keyword}">首页</a>
+                </li>
+                <li th:if="${page.currentPage!=1}">
+                    <a th:href="${'http://localhost:8083/search/queryPage?currentPage='+(page.currentPage-1)+'&keyword='+keyword}"><上一页</a>
+                </li>
+                <li th:each="p:${#numbers.sequence(1,page.totalPage)}" ><a th:if="${page.currentPage!=p}" th:text="${p}" th:href="${'http://localhost:8083/search/queryPage?currentPage='+p+'&keyword='+keyword}" >1</a><a th:if="${page.currentPage==p}" th:text="${p}"></a></li>
+                <li th:if="${page.currentPage!=page.totalPage}">
+                    <a th:href="${'http://localhost:8083/search/queryPage?currentPage='+(page.currentPage+1)+'&keyword='+keyword}">下一页></a>
+                </li>
+                <li>
+                    <a th:href="${'http://localhost:8083/search/queryPage?currentPage='+page.totalPage+'&keyword='+keyword}">尾页</a>
+                </li>
             </ul>
+            <a th:if="${page.list.size()==0}" th:text="暂无数据"></a>
         </div>
         <!-- 商品列表 End -->
 

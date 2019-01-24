@@ -13,3 +13,5 @@ dubbo:
     port: -1
   consumer:
     check: false
+  provider:
+    timeout: 10000
